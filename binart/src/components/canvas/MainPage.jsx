@@ -2,12 +2,14 @@ import { useState, useRef } from "react";
 import { Stage, Layer, Line } from "react-konva";
 import { Button } from "@/components/ui/button"; // shadcn UI
 import { Slider } from "@/components/ui/slider"; // shadcn UI
+import { SketchPicker } from "react-color";
 
 export default function DrawingBoard() {
   const [tool, setTool] = useState("pen");
-  const [color, setColor] = useState("black");
+  const [color, setColor] = useState("#000000");
   const [strokeWidth, setStrokeWidth] = useState(4);
   const [lines, setLines] = useState([]);
+  const [showColorPicker, setShowColorPicker] = useState(false);
   const isDrawing = useRef(false);
   const stageRef = useRef(null);
 
@@ -85,20 +87,25 @@ export default function DrawingBoard() {
         <Button onClick={() => setTool("eraser")}>🩹 Eraser</Button>
 
         <div className="mt-4">
-          <h3 className="font-bold">Colors</h3>
-          <div className="flex space-x-2 mt-2">
+          <h3 className="font-bold mb-2">Colors</h3>
+          <div className="relative">
             <button
-              className="w-6 h-6 bg-pink-500 rounded-full"
-              onClick={() => setColor("pink")}
+              className="w-8 h-8 rounded border-2 border-gray-300 mb-2"
+              style={{ backgroundColor: color }}
+              onClick={() => setShowColorPicker(!showColorPicker)}
             />
-            <button
-              className="w-6 h-6 bg-cyan-500 rounded-full"
-              onClick={() => setColor("cyan")}
-            />
-            <button
-              className="w-6 h-6 bg-yellow-400 rounded-full"
-              onClick={() => setColor("yellow")}
-            />
+            {showColorPicker && (
+              <div className="absolute left-10 top-0 z-50">
+                <div 
+                  className="fixed inset-0" 
+                  onClick={() => setShowColorPicker(false)}
+                />
+                <SketchPicker
+                  color={color}
+                  onChange={(colorResult) => setColor(colorResult.hex)}
+                />
+              </div>
+            )}
           </div>
         </div>
 
