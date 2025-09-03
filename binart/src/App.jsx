@@ -1,7 +1,7 @@
 import { useState } from "react"
 import IntroAxolot from "./components/intro/intro-axolot"
 import MainPage from "./components/canvas/MainPage"
-
+import "./App.css"
 export default function Page() {
   const [showIntro, setShowIntro] = useState(true)
 

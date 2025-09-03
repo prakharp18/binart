@@ -1,22 +1,44 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Stage, Layer, Line } from "react-konva";
-import { Button } from "@/components/ui/button"; // shadcn UI
-import { Slider } from "@/components/ui/slider"; // shadcn UI
-import { SketchPicker } from "react-color";
+import {
+  Pencil,
+  Highlighter,
+  Eraser,
+  Paintbrush,
+  Trash2,
+  Save,
+  Shuffle,
+  Bomb,
+} from "lucide-react";
 
-export default function DrawingBoard() {
+export default function MainPage() {
   const [tool, setTool] = useState("pen");
-  const [color, setColor] = useState("#000000");
-  const [strokeWidth, setStrokeWidth] = useState(4);
   const [lines, setLines] = useState([]);
-  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [color, setColor] = useState("#000000");
+  const [strokeWidth, setStrokeWidth] = useState(3);
+  const [eraserWidth, setEraserWidth] = useState(10);
   const isDrawing = useRef(false);
   const stageRef = useRef(null);
 
   const handleMouseDown = (e) => {
     isDrawing.current = true;
     const pos = e.target.getStage().getPointerPosition();
-    setLines([...lines, { tool, color, strokeWidth, points: [pos.x, pos.y] }]);
+    setLines([
+      ...lines,
+      {
+        tool,
+        points: [pos.x, pos.y],
+        color,
+        strokeWidth:
+          tool === "marker"
+            ? strokeWidth * 2
+            : tool === "brush"
+            ? strokeWidth * 1.5
+            : tool === "eraser"
+            ? eraserWidth
+            : 3, // pen always fixed size
+      },
+    ]);
   };
 
   const handleMouseMove = (e) => {
@@ -26,15 +48,12 @@ export default function DrawingBoard() {
     let lastLine = lines[lines.length - 1];
     lastLine.points = lastLine.points.concat([point.x, point.y]);
 
-    setLines([...lines.slice(0, -1), lastLine]);
+    const newLines = lines.slice(0, lines.length - 1).concat(lastLine);
+    setLines(newLines);
   };
 
   const handleMouseUp = () => {
     isDrawing.current = false;
-  };
-
-  const handleUndo = () => {
-    setLines(lines.slice(0, -1));
   };
 
   const handleClear = () => {
@@ -50,86 +69,108 @@ export default function DrawingBoard() {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-gray-100">
-      {/* Canvas Area */}
-      <div className="flex-1 flex items-center justify-center">
-        <Stage
-          width={800}
-          height={600}
-          className="bg-white border shadow-xl"
-          ref={stageRef}
-          onMouseDown={handleMouseDown}
-          onMousemove={handleMouseMove}
-          onMouseup={handleMouseUp}
+    <div className="w-screen h-screen relative bg-gray-50">
+      {/* ✅ Toolbar */}
+      <div className="toolbar">
+        <button
+          className={tool === "pen" ? "active" : ""}
+          onClick={() => setTool("pen")}
         >
-          <Layer>
-            {lines.map((line, i) => (
-              <Line
-                key={i}
-                points={line.points}
-                stroke={line.color}
-                strokeWidth={line.strokeWidth}
-                tension={0.5}
-                lineCap="round"
-                lineJoin="round"
-              />
-            ))}
-          </Layer>
-        </Stage>
-      </div>
+          <Pencil size={18} />
+        </button>
+        <button
+          className={tool === "marker" ? "active" : ""}
+          onClick={() => setTool("marker")}
+        >
+          <Highlighter size={18} />
+        </button>
+        <button
+          className={tool === "brush" ? "active" : ""}
+          onClick={() => setTool("brush")}
+        >
+          <Paintbrush size={18} />
+        </button>
+        <button
+          className={tool === "eraser" ? "active" : ""}
+          onClick={() => setTool("eraser")}
+        >
+          <Eraser size={18} />
+        </button>
 
-      {/* Sidebar Tools */}
-      <div className="w-40 bg-gray-200 flex flex-col items-center p-4 space-y-4 shadow-lg">
-        <h2 className="font-bold">Tools</h2>
-        <Button onClick={() => setTool("pen")}>✏ Pen</Button>
-        <Button onClick={() => setTool("brush")}>🖌 Brush</Button>
-        <Button onClick={() => setTool("marker")}>✒ Marker</Button>
-        <Button onClick={() => setTool("eraser")}>🩹 Eraser</Button>
-
-        <div className="mt-4">
-          <h3 className="font-bold mb-2">Colors</h3>
-          <div className="relative">
-            <button
-              className="w-8 h-8 rounded border-2 border-gray-300 mb-2"
-              style={{ backgroundColor: color }}
-              onClick={() => setShowColorPicker(!showColorPicker)}
-            />
-            {showColorPicker && (
-              <div className="absolute left-10 top-0 z-50">
-                <div 
-                  className="fixed inset-0" 
-                  onClick={() => setShowColorPicker(false)}
-                />
-                <SketchPicker
-                  color={color}
-                  onChange={(colorResult) => setColor(colorResult.hex)}
-                />
-              </div>
-            )}
-          </div>
-        </div>
-
-        <Button variant="destructive" onClick={handleClear}>
-          Obliterate ⚡
-        </Button>
-      </div>
-
-      {/* Bottom Toolbar */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-4 bg-white px-6 py-3 rounded-xl shadow-lg">
-        <Button onClick={handleExport}>Export</Button>
-        <Button onClick={handleUndo}>Oops! (Undo)</Button>
-        <div className="flex items-center space-x-2">
-          <span>Marker Size</span>
-          <Slider
-            defaultValue={[strokeWidth]}
-            max={20}
-            min={1}
-            step={1}
-            className="w-32"
-            onValueChange={(val) => setStrokeWidth(val[0])}
+        {/* ✅ Color only for marker/brush */}
+        {(tool === "marker" || tool === "brush") && (
+          <input
+            type="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
           />
-        </div>
+        )}
+
+        {/* ✅ Size bar only for marker/brush */}
+        {(tool === "marker" || tool === "brush") && (
+          <input
+            type="range"
+            min="1"
+            max="20"
+            value={strokeWidth}
+            onChange={(e) => setStrokeWidth(Number(e.target.value))}
+          />
+        )}
+
+        {/* ✅ Eraser size */}
+        {tool === "eraser" && (
+          <input
+            type="range"
+            min="5"
+            max="50"
+            value={eraserWidth}
+            onChange={(e) => setEraserWidth(Number(e.target.value))}
+          />
+        )}
+
+        <button onClick={handleExport}>
+          <Save size={18} />
+        </button>
+        <button onClick={handleClear}>
+          <Trash2 size={18} />
+        </button>
+        <button onClick={handleClear}>
+          <Bomb size={18} className="text-red-500" /> {/* 💥 BOOM! */}
+        </button>
+        <button onClick={() => alert("Wiggle mode coming soon!")}>
+          <Shuffle size={18} />
+        </button>
       </div>
+
+      {/* ✅ Drawing canvas */}
+      <Stage
+        ref={stageRef}
+        width={window.innerWidth}
+        height={window.innerHeight}
+        onMouseDown={handleMouseDown}
+        onMousemove={handleMouseMove}
+        onMouseup={handleMouseUp}
+        className="cursor-crosshair"
+      >
+        <Layer>
+          {lines.map((line, i) => (
+            <Line
+              key={i}
+              points={line.points}
+              stroke={line.color}
+              strokeWidth={line.strokeWidth}
+              tension={0.6}
+              bezier={true}
+              opacity={line.tool === "brush" ? 0.5 : 1}
+              lineCap="round"
+              lineJoin="round"
+              globalCompositeOperation={
+                line.tool === "eraser" ? "destination-out" : "source-over"
+              }
+            />
+          ))}
+        </Layer>
+      </Stage>
     </div>
   );
 }
