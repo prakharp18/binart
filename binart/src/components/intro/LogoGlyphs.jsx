@@ -9,7 +9,7 @@ export default function LogoGlyphs({
   bg = "#1A1A1A",
 }) {
   return (
-    <div className={cn("relative flex items-center gap-6", className)} aria-label="Binart digital art tools">
+    <div className={cn("relative flex items-center gap-6", className)} aria-label="Binart digital canvas">
       <div className="flex flex-col items-end gap-3">
         <div className="relative">
           <div
@@ -123,7 +123,7 @@ export default function LogoGlyphs({
             className="px-1 py-0.5 text-[8px] font-mono opacity-0 translate-y-4 scale-95"
             style={{ background: secondary, color: bg }}
           >
-            GIF
+            BINARY
           </div>
           <div
             data-piece

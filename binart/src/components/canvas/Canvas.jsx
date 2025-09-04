@@ -58,9 +58,6 @@ const Canvas = ({
         height: "100vh", 
         overflow: "auto", 
         position: "relative",
-        background: "linear-gradient(180deg, #faf9f7, #f5f4f2)",
-        backgroundImage: "radial-gradient(circle at 2px 2px, rgba(0,0,0,0.04) 1px, transparent 0)",
-        backgroundSize: "25px 25px",
         touchAction: "none"
       }}
     >
@@ -74,7 +71,7 @@ const Canvas = ({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        style={{ background: "#f5f4f2", touchAction: "none" }}
+        style={{ touchAction: "none" }}
       >
         <Layer ref={layerRef}>
           {lines.map((line) => {

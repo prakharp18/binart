@@ -10,25 +10,11 @@
   --text-secondary: #6b7280;
   --success-color: #10b981;
   --warning-color: #f59e0b;
-  --canvas-bg: linear-gradient(180deg, #faf9f7, #f5f4f2);
+  --canvas-bg: #F5F5F5;
   --canvas-pattern: rgba(0,0,0,0.04);
 }
 
-.dark {
-  --toolbar-bg: rgba(30,30,30,0.95);
-  --toolbar-accent: #60a5fa;
-  --toolbar-accent-hover: #3b82f6;
-  --toolbar-accent-light: #1e3a8a;
-  --shadow: 0 8px 40px rgba(0,0,0,0.3);
-  --shadow-hover: 0 12px 50px rgba(0,0,0,0.4);
-  --border-subtle: rgba(255,255,255,0.1);
-  --text-primary: #f9fafb;
-  --text-secondary: #9ca3af;
-  --success-color: #34d399;
-  --warning-color: #fbbf24;
-  --canvas-bg: linear-gradient(180deg, #0f0f0f, #1a1a1a);
-  --canvas-pattern: rgba(255,255,255,0.05);
-}
+
 
 .app {
   height: 100vh;
@@ -324,7 +310,9 @@
   width: 100vw;
   height: 100vh;
   overflow: auto;
-  background: var(--canvas-bg);
+  background-color: #F5F5F5 !important;
+  background-image: radial-gradient(#d0d0d0 1px, transparent 1px) !important;
+  background-size: 10px 10px !important; /* spacing */
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
