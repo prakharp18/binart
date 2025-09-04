@@ -1,3 +1,12 @@
+.app {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Toolbar */
 .toolbar {
   position: fixed;
   top: 20px;
@@ -42,4 +51,69 @@
 
 .toolbar input[type="range"] {
   cursor: pointer;
+}
+
+/* Swatches */
+.color-swatches {
+  display: flex;
+  gap: 6px;
+}
+
+.swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  padding: 6px 0;
+  min-width: 120px;
+  z-index: 2000;
+  animation: fadeIn 0.2s ease;
+}
+
+.dropdown-content div {
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dropdown-content div:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Canvas */
+.canvas-container {
+  flex: 1;
+  overflow: auto;
+  background: #fdfdfd;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
