@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Stage, Layer, Line, Circle, Text, Rect } from 'react-konva';
 
 const Canvas = ({
   stageRef,
   layerRef,
   wrapperRef,
-  CANVAS_W,
-  CANVAS_H,
   startDrawing,
   moveDrawing,
   endDrawing,
@@ -18,6 +16,24 @@ const Canvas = ({
   size,
   renderBinaryImage
 }) => {
+  const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (wrapperRef.current) {
+        setDimensions({
+          width: wrapperRef.current.clientWidth,
+          height: wrapperRef.current.clientHeight
+        });
+      }
+    };
+
+    // Update dimensions on mount and resize
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, [wrapperRef]);
   const handleTouchStart = (e) => {
     e.evt.preventDefault(); // Prevent scrolling
     startDrawing(e);
@@ -50,8 +66,8 @@ const Canvas = ({
     >
       <Stage
         ref={stageRef}
-        width={CANVAS_W}
-        height={CANVAS_H}
+        width={dimensions.width}
+        height={dimensions.height}
         onMouseDown={startDrawing}
         onMouseMove={moveDrawing}
         onMouseUp={endDrawing}

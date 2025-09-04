@@ -7,10 +7,7 @@ import ProgressModal from './ProgressModal';
 import "../../index.css";
 import "./dropdown.css";
 
-const CANVAS_W = 6000;
-const CANVAS_H = 6000;
-
-// Util functions
+// Utility functions
 function wigglePoints(basePoints, t, amp = 1.6, freq = 0.018) {
   const pts = new Array(basePoints.length);
   for (let i = 0; i < basePoints.length; i++) {
@@ -331,13 +328,18 @@ export default function MainPage() {
 
   // Export functions
   const exportPNG = async () => {
-    if (!stageRef.current) return;
+    if (!stageRef.current || !wrapperRef.current) return;
     try {
       const stage = stageRef.current;
       const layer = layerRef.current;
+      const wrapper = wrapperRef.current;
+      
+      // Get actual viewport dimensions
+      const viewportWidth = wrapper.clientWidth;
+      const viewportHeight = wrapper.clientHeight;
       
       const background = new window.Konva.Rect({
-        x: 0, y: 0, width: 800, height: 600, fill: 'white'
+        x: 0, y: 0, width: viewportWidth, height: viewportHeight, fill: 'white'
       });
       
       layer.add(background);
@@ -345,7 +347,7 @@ export default function MainPage() {
       layer.draw();
       
       const uri = stage.toDataURL({ 
-        x: 0, y: 0, width: 800, height: 600,
+        x: 0, y: 0, width: viewportWidth, height: viewportHeight,
         pixelRatio: 2, mimeType: 'image/png'
       });
       
@@ -505,8 +507,6 @@ export default function MainPage() {
         stageRef={stageRef}
         layerRef={layerRef}
         wrapperRef={wrapperRef}
-        CANVAS_W={CANVAS_W}
-        CANVAS_H={CANVAS_H}
         startDrawing={startDrawing}
         moveDrawing={moveDrawing}
         endDrawing={endDrawing}
