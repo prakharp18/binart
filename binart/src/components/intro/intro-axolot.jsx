@@ -22,7 +22,6 @@ export default function IntroAxolot({ onComplete }) {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
     if (reduce) {
-      // Respect reduced motion: show end state immediately
       root.style.opacity = "1"
       root.style.backgroundColor = "#1A1A1A"
       const all = root.querySelectorAll(
@@ -258,7 +257,7 @@ export default function IntroAxolot({ onComplete }) {
             >
               <span className="uppercase">Binart</span>
               <span className="uppercase">Digital Art</span>
-              <span className="uppercase">Platform</span>
+              <span className="uppercase">Canvas</span>
             </div>
           </div>
         </div>
@@ -288,7 +287,6 @@ export default function IntroAxolot({ onComplete }) {
           <Bullet index={1} text="WIGGLY DRAWING" />
           <Bullet index={2} text="BINARY EXPORT" />
           <Bullet index={3} text="PRIVACY FIRST" />
-          <Bullet index={4} text="GIF & JPG OUTPUT" />
         </div>
         
       </div>

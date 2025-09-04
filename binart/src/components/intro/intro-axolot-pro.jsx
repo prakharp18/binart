@@ -3,15 +3,6 @@
 import { useLayoutEffect, useRef } from "react"
 import gsap from "gsap"
 
-/**
- * Professional, slow-paced, cinematic Axolot-style intro.
- * - 4-color palette: black (#000), white (#fff), red (#E10600), gray (#9CA3AF)
- * - Letterbox bars, scanline/grain overlay, subtle vignette
- * - Center glyph cluster lock-in + micro-jitter settle
- * - Red panels and diagonal striped blocks via clip-path and transforms
- * - Bottom-left ticking bullets, right-side label reveal
- * - Red flash with camera shake, reduced-motion support, Skip/Replay controls
- */
 export default function IntroAxolotPro({
   onComplete,
 }: {

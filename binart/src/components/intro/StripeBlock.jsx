@@ -2,11 +2,7 @@
 
 import { cn } from "@/lib/utils"
 
-/**
- * StripeBlock
- * Diagonal red stripes on transparent. Starts offset horizontally and hidden.
- * GSAP animates xPercent to 0 and fades it in.
- */
+
 export default function StripeBlock({ className, direction = "left" }) {
   const startOffset = direction === "left" ? "-30%" : "30%"
   return (

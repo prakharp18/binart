@@ -2,16 +2,11 @@
 
 import { cn } from "@/lib/utils"
 
-/**
- * Panel
- * Solid red panels used around the stage. Starts clipped and slightly translated,
- * then GSAP reveals them via clipPath and yPercent.
- */
 export default function Panel({ className, tone = "dark" }) {
   const bg =
     tone === "dark"
-      ? "rgba(245, 158, 11, 0.85)" // warm amber, strong
-      : "rgba(245, 158, 11, 0.22)" // warm amber, muted
+      ? "rgba(245, 158, 11, 0.85)" 
+      : "rgba(245, 158, 11, 0.22)"
   return (
     <div
       data-panel

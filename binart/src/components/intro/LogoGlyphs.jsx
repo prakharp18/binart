@@ -2,22 +2,15 @@
 
 import { cn } from "@/lib/utils"
 
-/**
- * LogoGlyphs
- * Digital art themed glyph cluster: pixel brush, binary patterns, and drawing tools.
- * Represents the core of Binart - digital art creation and binary privacy.
- */
 export default function LogoGlyphs({
   className,
-  color = "#F59E0B", // warm amber
-  secondary = "#FB923C", // orange accent
-  bg = "#1A1A1A", // dark charcoal
+  color = "#F59E0B",
+  secondary = "#FB923C",
+  bg = "#1A1A1A",
 }) {
   return (
     <div className={cn("relative flex items-center gap-6", className)} aria-label="Binart digital art tools">
-      {/* Left: Pixel brush/pen tool */}
       <div className="flex flex-col items-end gap-3">
-        {/* Brush tip */}
         <div className="relative">
           <div
             data-piece
@@ -38,7 +31,6 @@ export default function LogoGlyphs({
           style={{ background: color }}
         />
         
-        {/* Pixel grid preview */}
         <div className="grid grid-cols-3 gap-1">
           {[...Array(9)].map((_, i) => (
             <div
@@ -144,7 +136,7 @@ export default function LogoGlyphs({
       </div>
 
       {/* Right: stacked label (optional external text can be placed separately) */}
-      <div className="sr-only">BINART — Digital Art Platform</div>
+      <div className="sr-only">BINART — Digital Art Canvas</div>
     </div>
   )
 }

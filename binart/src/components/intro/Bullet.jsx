@@ -2,11 +2,7 @@
 
 import { cn } from "@/lib/utils"
 
-/**
- * Bullet
- * Monospace line like: [01] ........ SURVIVAL SANDBOX
- * Starts slightly left and transparent. GSAP reveals with steps() cadence.
- */
+
 export default function Bullet({ className, index, text }) {
   const idx = String(index).padStart(2, "0")
   return (
