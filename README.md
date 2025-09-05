@@ -51,7 +51,7 @@ A complex drawing that would be several MB as a PNG becomes just a few KB as an 
 **Styling**: Tailwind CSS for responsive design  
 **UI Components**: Radix UI primitives with custom styling  
 **Icons**: Lucide React for consistent iconography  
-**Animation**: Framer Motion for smooth transitions  
+**Animation**: Framer Motion & GSAP for smooth transitions and advanced animations  
 **Deployment**: Vercel for seamless hosting
 
 ---
